@@ -3,9 +3,9 @@
 @Name :       	QapTcha - jQuery Plugin
 @Revison :    	4.1
 @Date : 		07/03/2012  - dd/mm/YYYY
-@Author:     	 ALPIXEL Agency - (www.myjqueryplugins.com - www.alpixel.fr) 
+@Author:     	 ALPIXEL Agency - (www.myjqueryplugins.com - www.alpixel.fr)
 @License :		 Open Source - MIT License : http://www.opensource.org/licenses/mit-license.php
- 
+
 **************************************************************************
 *************************************************************************/
 jQuery.QapTcha = {
@@ -18,13 +18,13 @@ jQuery.QapTcha = {
 			autoRevert : true,
 			PHPfile : 'php/Qaptcha.jquery.php',
 			autoSubmit : false
-        };   
-		
+        };
+
 		if(this.length>0)
 		return jQuery(this).each(function(i) {
 			/** Vars **/
-			var 
-				opts = $.extend(defaults, options),      
+			var
+				opts = $.extend(defaults, options),
 				$this = $(this),
 				form = $('form').has($this),
 				Clr = jQuery('<div>',{'class':'clr'}),
@@ -32,10 +32,10 @@ jQuery.QapTcha = {
 				Slider = jQuery('<div>',{'class':'Slider'}),
 				TxtStatus = jQuery('<div>',{'class':' TxtStatus dropError',text:opts.txtLock}),
 				inputQapTcha = jQuery('<input>',{name:generatePass(32),value:generatePass(7),type:'hidden'});
-			
+
 			/** Disabled submit button **/
 			if(opts.disabledSubmit) form.find('input[type=\'submit\']').attr('disabled','disabled');
-			
+
 			/** Construct DOM **/
 			bgSlider.appendTo($this);
 			Clr.insertAfter(bgSlider);
@@ -43,19 +43,19 @@ jQuery.QapTcha = {
 			inputQapTcha.appendTo($this);
 			Slider.appendTo(bgSlider);
 			$this.show();
-			
-			Slider.draggable({ 
+
+			Slider.draggable({
 				revert: function(){
 					if(opts.autoRevert)
 					{
-						if(parseInt(Slider.css("left")) > 150) return false;
+						if(parseInt(Slider.css("left")) > (bgSlider.width()-Slider.width()-1)) return false;
 						else return true;
 					}
 				},
 				containment: bgSlider,
 				axis:'x',
 				stop: function(event,ui){
-					if(ui.position.left > 150)
+					if(ui.position.left > (bgSlider.width()-Slider.width()-1))
 					{
 						// set the SESSION iQaptcha in PHP file
 						$.post(opts.PHPfile,{
@@ -75,7 +75,7 @@ jQuery.QapTcha = {
 					}
 				}
 			});
-			
+
 			function generatePass(nb) {
 		        var chars = 'azertyupqsdfghjkmwxcvbn23456789AZERTYUPQSDFGHJKMWXCVBN_-#@';
 		        var pass = '';
@@ -85,7 +85,7 @@ jQuery.QapTcha = {
 		        }
 		        return pass;
 		    }
-			
+
 		});
 	}
 }; jQuery.fn.QapTcha = jQuery.QapTcha.build;
